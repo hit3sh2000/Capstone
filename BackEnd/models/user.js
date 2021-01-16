@@ -57,4 +57,4 @@ userSchema.pre('save', async function(next){
 })
 
 
-mongoose.model('User', userSchema); //exporting schema
+module.exports =mongoose.model('User', userSchema); //exporting schema
