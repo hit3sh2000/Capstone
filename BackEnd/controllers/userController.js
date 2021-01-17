@@ -1,14 +1,22 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const User = mongoose.model('User');
+const upload = require('../middlewares/multer');
+const cloudinary = require('cloudinary');
+require('../middlewares/cloudinary');
+
 module.exports = {
     addUser: async(req,res)=>{
         try {
+            const path ="user/avatar/" + req.file.filename;
+            const avatar = await cloudinary.v2.uploader.upload(req.file.path,
+                { public_id: path });
+
             const {
                 U_firstname, U_lastname,
                 U_username, U_email,
-                U_password,U_avatar,
-                U_qualification,U_age, U_gender
+                U_password,U_qualification,
+                U_age, U_gender,U_contact,U_address
             } = req.body;
 
             const user = new User(); 
@@ -17,10 +25,12 @@ module.exports = {
             user.U_username = U_username
             user.U_email = U_email
             user.U_password = U_password
-            user.U_avatar = U_avatar
+            user.U_avatar = avatar.url
             user.U_qualification = U_qualification
             user.U_age = U_age
             user.U_gender = U_gender
+            user.U_contact = U_contact
+            user.U_address = U_address
            
             await user.save((err, doc) => {
                 if (!err)

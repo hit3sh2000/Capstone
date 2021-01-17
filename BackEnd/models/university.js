@@ -6,7 +6,7 @@ var universitySchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    minlength: 3,
+    minlength: 3,                 
   },
   Us_email: {
     type: String,
@@ -17,11 +17,10 @@ var universitySchema = new mongoose.Schema({
      type:String,
      require:true
   },
-  Us_desc: String,
+  Us_desc:String,
   Us_img: String,
-  Us_ratings: {
-    type: String,
-  },
+  Us_ratings: String,
+  Us_address:String,
   courses: [
     {
       type: mongoose.Schema.Types.ObjectId,

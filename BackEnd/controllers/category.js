@@ -1,6 +1,11 @@
+require('dotenv').config();
 const Category = require("../models/category");
 const slugify = require("slugify");
 const shortid = require("shortid");
+const upload = require('../middlewares/multer');
+const cloudinary = require('cloudinary');
+require('../middlewares/cloudinary');
+
 
 function createCategories(categories, parentId = null) {
   const categoryList = [];
@@ -25,7 +30,13 @@ function createCategories(categories, parentId = null) {
   return categoryList;
 }
 
-exports.addCategory = (req, res) => {
+exports.addCategory = async(req, res) => {
+  const path ="/public/" + req.file.filename;
+  const result = await cloudinary.v2.uploader.upload(req.file.path,
+    {public_id: path} );
+
+
+
   const categoryObj = {
     name: req.body.name,
     slug: `${slugify(req.body.name)}-${shortid.generate()}`,
@@ -33,8 +44,7 @@ exports.addCategory = (req, res) => {
   };
 
   if (req.file) {
-    categoryObj.categoryImage = "/public/" + req.file.filename;
-  }
+    categoryObj.categoryImage = result.secure_url;
 
   if (req.body.parentId) {
     categoryObj.parentId = req.body.parentId;
@@ -47,6 +57,7 @@ exports.addCategory = (req, res) => {
       return res.status(201).json({ category });
     }
   });
+};
 };
 
 exports.getCategories = (req, res) => {
