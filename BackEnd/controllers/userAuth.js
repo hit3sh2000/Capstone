@@ -6,8 +6,12 @@ const jwt = require('jsonwebtoken');
     console.log(req.user);
     const payload = {
         username: req.user.U_username,
-
-        id: req.user._id
+        firstname:req.user.U_firstname,
+        lastname:req.user.U_lastname,
+        id: req.user._id,
+        gender:req.user.U_gender,
+        address:req.user.U_address,
+        contact:req.user.U_contact
     }
     console.log(payload)
     const encoded = jwt.sign(payload, process.env.JWT_SECRET)

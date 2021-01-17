@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 
 const courseSchema = new mongoose.Schema({
-    C_id:{
-        type:String
-    },
+    
     C_name:{
         type:String,
         required: true
@@ -20,7 +18,7 @@ const courseSchema = new mongoose.Schema({
     C_img:{
         type:String
     },
-    C_rating:[{
+    C_ratings:[{
         type:String
     }],
     C_reviews:[{
@@ -32,16 +30,21 @@ const courseSchema = new mongoose.Schema({
     C_price:{
         type:String,
         required:true
+    },
+    category:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        required:true
     }
     // ,
     // Users:[{
     //     type:mongoose.Schema.Types.ObjectId,
     //     ref: 'User'
     // }],
-    // Universities:{
+    // Universities:[{
     //     type:mongoose.Schema.Types.ObjectId,
     //     ref: 'University'
-    // }
+    // }]
 })
 
 

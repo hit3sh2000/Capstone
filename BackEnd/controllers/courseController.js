@@ -1,31 +1,32 @@
 const mongoose = require('mongoose');
 const Course = mongoose.model('Course');
 require('dotenv').config();
-const upload = require('../middlewares/multer');
+const slugify = require("slugify");
+const shortid = require("shortid");
 const cloudinary = require('cloudinary');
 require('../middlewares/cloudinary');
 module.exports = {
     addCourse: async(req,res)=>{
         try {
-        const avatar = await cloudinary.v2.uploader.upload(req.file.path);
+            const path ="course/avatar/" + req.file.filename;
+            const avatar = await cloudinary.v2.uploader.upload(req.file.path,
+            { public_id: path });
 
             const {
-                C_id, C_name,
-                C_desc,
-                C_rating,C_reviews,
-                C_duration,Users, Universities
+                C_name,C_desc,C_ratings,C_reviews,C_duration,C_price,category 
             } = req.body;
+            
 
             const course = new Course(); 
-            course.C_id = C_id
             course.C_name = C_name
+            course.C_slug = slugify(C_name)
             course.C_desc = C_desc
             course.C_img = avatar.url
-            course.C_rating = C_rating
+            course.C_ratings = C_ratings
             course.C_reviews = C_reviews
             course.C_duration = C_duration
-            course.Users = Users
-            course.Universities = Universities
+            course.C_price = C_price
+            course.category = category
            
             await course.save((err, doc) => {
                 if (!err)

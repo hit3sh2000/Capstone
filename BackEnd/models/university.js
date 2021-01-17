@@ -23,6 +23,8 @@ var universitySchema = new mongoose.Schema({
   Us_img: String,
   Us_ratings: String,
   Us_address:String,
+  Us_role:String,
+
   courses: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -43,4 +45,4 @@ universitySchema.pre('save', async function(next){
   }
 })
 
-mongoose.model("University", universitySchema); //exporting schema
+module.exports=mongoose.model("University", universitySchema); //exporting schema

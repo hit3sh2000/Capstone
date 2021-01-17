@@ -30,16 +30,10 @@ function createCategories(categories, parentId = null) {
 }
 
 exports.addCategory = async(req, res) => {
-  const path ="/public/" + req.file.filename;
-  const result = await cloudinary.v2.uploader.upload(req.file.path,
-    {public_id: path} );
-
-
-
+ 
   const categoryObj = {
     name: req.body.name,
     slug: `${slugify(req.body.name)}-${shortid.generate()}`,
-    //createdBy: req.user._id,
   };
   if (req.body.parentId) {
     categoryObj.parentId = req.body.parentId;

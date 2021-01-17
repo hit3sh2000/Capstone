@@ -2,10 +2,15 @@ const load = require("dotenv").config();
 if (load.error) throw load.error;
 require('./models/db');                       //import MONGODB connction files
 const express = require('express');                      // import  express
-const bodyparser = require('body-parser');               // import  body-parser                    
+const bodyparser = require('body-parser');               // import  body-parser           
+
+
 const user = require('./routes/userRoute');    // import  userController                        
 const course = require('./routes/courseRoute')
-const university = require('./routes/universityRoute');    // import  userController                        
+const university = require('./routes/universityRoute');    // import  userController    
+const category = require('./routes/categoryRoute')
+const userAuth = require('./routes/userAuthRoute')
+
 const app = express()                                    //Asigning express         
 const cookieParser=require('cookie-parser')       
 
@@ -22,8 +27,9 @@ app.get('/', (req, res) => {
 app.use('/user',user);        //  setting router 
 app.use('/course',course);
 app.use('/university',university);        //  setting router 
-app.use('/user/auth',require('./routes/userAuthRoute')); 
-app.use('/category',require('./routes/category')); 
+app.use('/user/auth',userAuth); 
+app.use('/category',category); 
+
 
 
 const PORT = 3000;
