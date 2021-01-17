@@ -8,6 +8,11 @@ const courseSchema = new mongoose.Schema({
         type:String,
         required: true
     },
+    C_slug: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     C_desc:{
         type:String,
         required: true
@@ -15,14 +20,18 @@ const courseSchema = new mongoose.Schema({
     C_img:{
         type:String
     },
-    C_rating:{
+    C_rating:[{
         type:String
-    },
-    C_reviews:{
+    }],
+    C_reviews:[{
         type:String
-    },
+    }],
     C_duration:{
         type:String
+    },
+    C_price:{
+        type:String,
+        required:true
     }
     // ,
     // Users:[{

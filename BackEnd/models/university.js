@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');       //importing bcrypt
 
 
 //universitySchema for user
-var universitySchema = new mongoose.Schema({
+var universitySchema = new mongoose.Schema({                    
   Us_name: {
     type: String,
     required: true,

@@ -22,7 +22,6 @@ function createCategories(categories, parentId = null) {
       name: cate.name,
       slug: cate.slug,
       parentId: cate.parentId,
-      type: cate.type,
       children: createCategories(categories, cate._id),
     });
   }
@@ -42,10 +41,6 @@ exports.addCategory = async(req, res) => {
     slug: `${slugify(req.body.name)}-${shortid.generate()}`,
     //createdBy: req.user._id,
   };
-
-  if (req.file) {
-    categoryObj.categoryImage = result.secure_url;
-
   if (req.body.parentId) {
     categoryObj.parentId = req.body.parentId;
   }
@@ -57,7 +52,6 @@ exports.addCategory = async(req, res) => {
       return res.status(201).json({ category });
     }
   });
-};
 };
 
 exports.getCategories = (req, res) => {
