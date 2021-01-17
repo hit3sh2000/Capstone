@@ -8,9 +8,9 @@ require('../middlewares/cloudinary');
 module.exports = {
     adduniversity: async(req,res)=>{
         try {
-            const path ="university/img/" + req.file.filename;
-            const avatar = await cloudinary.v2.uploader.upload(req.file.path,
-                { public_id: path });
+            // const path ="university/img/" + req.file.filename;
+            // const avatar = await cloudinary.v2.uploader.upload(req.file.path,
+            //     { public_id: path });
 
             const {
                 Us_name,Us_email,Us_password,Us_desc,Us_ratings,Us_address
@@ -21,9 +21,10 @@ module.exports = {
             university.Us_email = Us_email
             university.Us_password = Us_password
             university.Us_desc = Us_desc
-            university.Us_img = avatar.url
+           // university.Us_img = avatar.url
             university.Us_ratings = Us_ratings
             university.Us_address = Us_address
+            university.Us_role="university"
             await university.save((err, doc) => {
                 if (!err)
                     res.json(university)

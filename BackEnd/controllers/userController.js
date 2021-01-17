@@ -8,9 +8,9 @@ require('../middlewares/cloudinary');
 module.exports = {
     addUser: async(req,res)=>{
         try {
-            const path ="user/avatar/" + req.file.filename;
-            const avatar = await cloudinary.v2.uploader.upload(req.file.path,
-                { public_id: path });
+            // const path ="user/avatar/" + req.file.filename;
+            // const avatar = await cloudinary.v2.uploader.upload(req.file.path,
+            //     { public_id: path });
 
             const {
                 U_firstname, U_lastname,
@@ -25,7 +25,7 @@ module.exports = {
             user.U_username = U_username
             user.U_email = U_email
             user.U_password = U_password
-            user.U_avatar = avatar.url
+          //  user.U_avatar = avatar.url
             user.U_qualification = U_qualification
             user.U_age = U_age
             user.U_gender = U_gender

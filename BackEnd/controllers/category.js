@@ -31,33 +31,34 @@ function createCategories(categories, parentId = null) {
 }
 
 exports.addCategory = async(req, res) => {
-  const path ="/public/" + req.file.filename;
-  const result = await cloudinary.v2.uploader.upload(req.file.path,
-    {public_id: path} );
-
-
-
-  const categoryObj = {
-    name: req.body.name,
-    slug: `${slugify(req.body.name)}-${shortid.generate()}`,
-    //createdBy: req.user._id,
-  };
-
-  if (req.file) {
-    categoryObj.categoryImage = result.secure_url;
-
-  if (req.body.parentId) {
-    categoryObj.parentId = req.body.parentId;
-  }
-
-  const cat = new Category(categoryObj);
-  cat.save((error, category) => {
-    if (error) return res.status(400).json({ error });
-    if (category) {
-      return res.status(201).json({ category });
+  // const path ="/public/" + req.file.filename;
+  // const result = await cloudinary.v2.uploader.upload(req.file.path,
+  //   {public_id: path} );
+  console.log(req.user);
+  try {
+    const categoryObj = {
+      name: req.body.name,
+      slug: `${slugify(req.body.name)}-${shortid.generate()}`,
+      createdBy: req.user.id,
+    };
+  
+    // if (req.file) {
+    //   categoryObj.categoryImage = result.secure_url;
+  
+    if (req.body.parentId) {
+      categoryObj.parentId = req.body.parentId;
     }
-  });
-};
+  
+    const cat = new Category(categoryObj);
+    cat.save((error, category) => {
+      if (error) return res.status(400).json({ error });
+      if (category) {
+        return res.status(201).json({ category });
+      }
+    });
+  } catch (error) {
+    res.status(500).send(error)
+  }
 };
 
 exports.getCategories = (req, res) => {

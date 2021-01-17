@@ -26,5 +26,6 @@ app.use('/user/auth',require('./routes/userAuthRoute'));
 app.use('/category',require('./routes/category')); 
 
 
-const PORT = 3000;
+
+const PORT = 3001;
 app.listen(PORT,console.log(`Port is running on http://localhost:${PORT}`));
