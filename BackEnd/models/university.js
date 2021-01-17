@@ -1,4 +1,6 @@
 const mongoose = require("mongoose"); //importing mongoose
+const bcrypt = require('bcrypt');       //importing bcrypt
+
 
 //universitySchema for user
 var universitySchema = new mongoose.Schema({
@@ -28,5 +30,17 @@ var universitySchema = new mongoose.Schema({
     },
   ],
 });
+
+
+universitySchema.pre('save', async function(next){
+  try{
+      const salt = await bcrypt.genSalt(10)
+      const hashPassword = await bcrypt.hash(this.Us_password, salt)
+      this.Us_password= hashPassword
+      next()
+  }catch(err){
+      console.log(err)
+  }
+})
 
 mongoose.model("University", universitySchema); //exporting schema
