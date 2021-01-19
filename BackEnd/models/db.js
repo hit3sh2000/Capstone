@@ -13,7 +13,8 @@ mongoose.connect('mongodb://localhost:27017/Capstone', {
     else { console.log('Error in DB connection : ' + err) }
 });
 
-require('./user');       // requiring Schema     
-require('./course');
-require('./university');       // requiring Schema     
-require('./schedule')
+require('./user');         // requiring Schema                                      
+require('./course');       // requiring Schema                                               
+require('./university');   // requiring Schema                                                  
+require('./schedule')      // requiring Schema              
+require('./cart')          // requiring Schema                                                          

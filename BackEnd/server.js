@@ -11,6 +11,7 @@ const university = require('./routes/universityRoute');    // import  userContro
 const category = require('./routes/categoryRoute')
 const userAuth = require('./routes/userAuthRoute')
 const schedule = require('./routes/scheduleRoutes')
+const cart = require('./routes/cartRoute')
 
 const app = express()                                    //Asigning express         
 const cookieParser=require('cookie-parser')       
@@ -31,6 +32,7 @@ app.use('/university',university);        //  setting router
 app.use('/user/auth',userAuth); 
 app.use('/category',category); 
 app.use('/schedule',schedule); 
+app.use('/cart',cart); 
 
 
 

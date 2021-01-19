@@ -1,3 +1,8 @@
+// const shortid = require("shortid");
+// const path = require("path");                          commented because it not used 
+// require('dotenv').config();
+// const upload = require('../middlewares/multer');
+
 const express = require("express");
 const {
   addCategory,
@@ -6,10 +11,6 @@ const {
   deleteCategories,
 } = require("../controllers/category");
 const router = express.Router();
-const shortid = require("shortid");
-const path = require("path");
-require('dotenv').config();
-const upload = require('../middlewares/multer');
 const{requireSignin}=require('../middlewares/usermiddleware')
 
 router.post("/create",addCategory);

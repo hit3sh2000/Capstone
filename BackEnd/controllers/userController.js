@@ -4,6 +4,8 @@ const User = mongoose.model('User');
 const upload = require('../middlewares/multer');
 const cloudinary = require('cloudinary');
 require('../middlewares/cloudinary');
+const Cart = mongoose.model('Cart');
+
 
 module.exports = {
     addUser: async(req,res)=>{
@@ -32,13 +34,16 @@ module.exports = {
             user.U_contact = U_contact
             user.U_address = U_address
            
-            await user.save((err, doc) => {
-                if (!err)
-                    res.json(user)
-                else {
-                     console.log(err);
-                }
-            });      
+            await user.save();      
+            
+            const user1 = await User.findOne({U_username:U_username});
+            console.log(user1);
+            const cart = new Cart();
+            cart.user = user1._id
+            await cart.save()
+
+            res.json({user, cart})
+
         } catch (err) {
             res.send(err)
             console.log(err);
