@@ -45,5 +45,38 @@ module.exports = {
         }catch(err){
         res.send(err)
         }
-    }  
+    },
+    getuniversity_course: async(req, res) => {
+        try{
+            const university = await University.findById(req.body.id).populate('courses');
+            res.send(university.courses);           
+        }catch(err){
+        res.send(err)
+        }
+    },
+    adduniversity_course: async(req, res) => {
+        try{
+            
+            const course_educator = {
+                course: req.body.cid,
+                Educator: req.body.eid
+            }
+            const university = await University.findById(req.body.id)
+            
+            university.courses.push({course: req.body.cid,Educator: req.body.eid})
+            
+            await university.save((err, doc) => {
+                if (!err)
+                    res.json(university)
+                else {
+                     console.log(err);
+                }
+            });      
+
+
+            
+        }catch(err){
+        res.send(err)
+        }
+    }
 }

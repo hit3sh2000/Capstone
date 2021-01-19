@@ -27,8 +27,14 @@ var universitySchema = new mongoose.Schema({
 
   courses: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Course",
+      course:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course"
+      },
+      Educator:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Educator"
+      }
     },
   ],
 });

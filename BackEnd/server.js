@@ -12,6 +12,7 @@ const category = require('./routes/categoryRoute')
 const userAuth = require('./routes/userAuthRoute')
 const schedule = require('./routes/scheduleRoutes')
 const cart = require('./routes/cartRoute')
+const educator = require('./routes/educatorRoute')
 
 const app = express()                                    //Asigning express         
 const cookieParser=require('cookie-parser')       
@@ -33,6 +34,7 @@ app.use('/user/auth',userAuth);
 app.use('/category',category); 
 app.use('/schedule',schedule); 
 app.use('/cart',cart); 
+app.use('/educator',educator); 
 
 
 

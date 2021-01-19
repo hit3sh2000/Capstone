@@ -1,13 +1,6 @@
 const mongoose = require("mongoose");
 const scheduleSchema = new mongoose.Schema({
-    Us_id: {
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'University'
-      },
-    C_id: {
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'Course'
-      },
+    
     S_topic: {
         type: String
       },
@@ -19,7 +12,17 @@ const scheduleSchema = new mongoose.Schema({
       },
     S_link: {
         type: String
+      },
+    universitys_course:{
+      university:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "University"
+      },
+      course:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course"
       }
+    }
 });
 
 mongoose.model("Schedule",scheduleSchema);

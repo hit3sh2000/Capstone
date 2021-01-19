@@ -18,3 +18,4 @@ require('./course');       // requiring Schema
 require('./university');   // requiring Schema                                                  
 require('./schedule')      // requiring Schema              
 require('./cart')          // requiring Schema                                                          
+require('./educator')          // requiring Schema                                                          

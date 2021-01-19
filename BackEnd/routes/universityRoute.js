@@ -11,5 +11,10 @@ router.route('/')
 .post(upload.single('Us_img'),universityController.adduniversity)//to add user
 router.post('/auth',singIn);
 
+//to all course in university
+router.route('/addcourse')
+.get(universityController.getuniversity_course)
+.post(universityController.adduniversity_course)
+
 
 module.exports = router;
