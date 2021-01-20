@@ -16,6 +16,11 @@ const educatorSchema = new mongoose.Schema({
     E_qualification: {
       type: String,
       required: true,
+    },
+    E_university:{
+       type:mongoose.Schema.Types.ObjectId,
+       ref: 'University',
+       required:true
     }
 
 });

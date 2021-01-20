@@ -11,11 +11,11 @@ const {
   deleteCategories,
 } = require("../controllers/category");
 const router = express.Router();
-const{requireSignin}=require('../middlewares/usermiddleware')
+const{requireSignin ,universityMiddleware}=require('../middlewares/usermiddleware')
 
-router.post("/create",addCategory);
+router.post("/create",requireSignin,universityMiddleware,addCategory);
 router.get("/getcategory", getCategories);
-router.put("/update" ,updateCategories);
+router.put("/update" ,requireSignin,universityMiddleware,updateCategories);
 router.delete("/delete", deleteCategories);
 
 module.exports = router;

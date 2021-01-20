@@ -17,7 +17,8 @@ exports.singIn=async(req,res)=>{
             email:user.Us_email,
             desc:user.Us_desc,
             address:user.Us_address,
-            courses:user.Us_courses
+            courses:user.Us_courses,
+            role:user.Us_role
         }
         console.log(payload);
         const token=await jwt.sign(payload,process.env.JWT_SECRET)
