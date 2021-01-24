@@ -58,6 +58,8 @@ exports.getCategories = (req, res) => {
   });
 };
 
+
+
 exports.updateCategories = async (req, res) => {
   const { _id, name, parentId, type } = req.body;
   const updatedCategories = [];

@@ -10,7 +10,7 @@ const{requireSignin}=require('../middlewares/usermiddleware')
 
 router.post("/",addCourseInCart);
 router.get("/", getCourseInCart);
-router.get("/cartItems", cartItems);
+router.post("/cartItems", cartItems);
 
 
 module.exports = router;

@@ -18,8 +18,8 @@ module.exports = {
     }, 
     cartItems: async(req, res) => {
         try{
-            const cart = await Cart.findById(req.body.id).populate('cartItems');
-            res.send(cart.cartItems);
+            const cart = await Cart.findOne({user:req.body.id}).populate('cartItems');
+            res.json(cart.cartItems);
         }catch(err){
         res.send(err)
         }

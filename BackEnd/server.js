@@ -3,6 +3,7 @@ if (load.error) throw load.error;
 require('./models/db');                       //import MONGODB connction files
 const express = require('express');                      // import  express
 const bodyparser = require('body-parser');               // import  body-parser           
+const cors = require('cors')
 
 
 const user = require('./routes/userRoute');    // import  userController                        
@@ -14,9 +15,9 @@ const schedule = require('./routes/scheduleRoutes')
 const cart = require('./routes/cartRoute')
 const educator = require('./routes/educatorRoute')
 
-const app = express()                                    //Asigning express         
+const app = express()                                    //Asigning express    
 const cookieParser=require('cookie-parser')       
-
+app.use(cors());
 app.use(bodyparser.urlencoded({
     extended: true                          //Asigning bodyparser
 }));
@@ -25,7 +26,9 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.get('/', (req, res) => {
   res.send('Hello World');                        //simple route for hello World
 });
-
+app.get('hi',(req,res)=>{
+  res.send("hii")
+})
 
 app.use('/user',user);        //  setting router 
 app.use('/course',course);
