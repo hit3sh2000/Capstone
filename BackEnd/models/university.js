@@ -29,11 +29,13 @@ var universitySchema = new mongoose.Schema({
     {
       course:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Course"
+        ref: "Course",
+        require:true
       },
       Educator:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Educator"
+        ref: "Educator",
+        require:true
       }
     },
   ],
