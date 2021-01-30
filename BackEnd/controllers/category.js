@@ -1,4 +1,8 @@
 require('dotenv').config();
+const mongoose = require('mongoose');
+const University = mongoose.model('University');
+const Course = mongoose.model('Course');
+const Educator = mongoose.model('Educator');
 const Category = require("../models/category");
 const slugify = require("slugify");
 const shortid = require("shortid");
@@ -29,8 +33,8 @@ function createCategories(categories, parentId = null) {
   return categoryList;
 }
 
-exports.addCategory = async(req, res) => {
- 
+exports.addCategory = async (req, res) => {
+
   const categoryObj = {
     name: req.body.name,
     slug: `${slugify(req.body.name)}-${shortid.generate()}`,
@@ -58,8 +62,52 @@ exports.getCategories = (req, res) => {
   });
 };
 
+exports.getCouresById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const course = await Course.find({ category: id });
+    // console.log(course);
+    res.json(course);
+  } catch (err) {
+    res.json(err)
+    console.log(err);
+  }
+}
 
+exports.getUniversityByCourse = async (req, res) => {
+  try {
+    const cid = req.params.cid;
+    const course = await Course.findById(cid).populate("Universities");
+    res.json(course.Universities);
+  } catch (err) {
+    res.json(err)
+    console.log(err);
+  }
+}
+exports.getFull = async (req, res) => {
+  try {
+    const cid = req.params.cid;
+    const uid = req.params.uid;
+    var temp1, temp2;
+    const university = await University.findById(uid);
+    for (let cate of university.courses) {
+      if (cate.course == cid) {
+        console.log("yes");
+        temp1 = cate.course;
+        temp2 = cate.Educator;
+      } else {
+        console.log("no")
+      }
+    }
+    const course = await Course.findById(cid);
+    const educator = await Educator.findById(temp2);
 
+    res.json({ full:{university, course, educator} })
+    } catch (err) {
+    res.json(err)
+    console.log(err);
+  }
+}
 exports.updateCategories = async (req, res) => {
   const { _id, name, parentId, type } = req.body;
   const updatedCategories = [];

@@ -1,35 +1,99 @@
 const mongoose = require('mongoose');
+const User = mongoose.model('User');
 const Cart = mongoose.model('Cart');
 module.exports = {
-    // 
-    addCourseInCart:async(req, res) => {
-        try{
-            const { id, cid }=req.body
-            const cart = await Cart.findById(id);
-            cart.cartItems.push(cid);
-            await cart.save();
+    addCourseInCart: async (req, res) => {
+        try {
+            const usid = req.body.usid;
+            const cid = req.body.cid;
+            const uid = req.body.uid;
+            const cart = await Cart.findOne({ user: uid });
+            const cart_course = await Cart.findOne({ user: uid }).populate("cartItems.courseId");
+            let check = 0;
+            let total = 0;
 
-            res.send(cart)
+            cart.cartItems.map((item) => {
+                if (item.courseId == cid) {
+                    check = 1;
+                }
+            })
+            if (check == 0) {
+                cart.cartItems.push({courseId:cid,universityId:usid});
+                // cart_course.cartItems.courseId.map(item => {
+                //     total += parseInt(item.C_price)
+                // })
+                console.log(cart);
+                await cart.save();
+                console.log(cart);
+                res.json({ TotalAmount: total, cart: true, cart })
+            } else {
+                cart_course.cartItems.map(item => {
+                    total += parseInt(item.courseId.C_price)
+                })
+                // console.log(total);
+                // console.log({ message: "courese is already added in cart" });
 
-
-        }catch(err){
-        res.send(err)
-        }
-    }, 
-    cartItems: async(req, res) => {
-        try{
-            const cart = await Cart.findOne({user:req.body.id}).populate('cartItems');
-            res.json(cart.cartItems);
-        }catch(err){
-        res.send(err)
+                res.json({ TotalAmount: total, course: cart, cart: false, message: "courese is already added in cart" })
+            }
+        } catch (err) {
+            res.send(err)
+            // console.log(err);
         }
     },
-    getCourseInCart: async(req, res) => {
-        try{
+    removeCourseInCart: async (req, res) => {
+        try {
+            const cid = req.body.cid;
+            const uid = req.body.uid;
+            const cart = await Cart.findOne({ user: uid });
+            // console.log(cart);
+            console.log("here");
+            cart.cartItems.map(async(item, index) => {
+                console.log(item.courseId,index);
+
+                if (!item.courseId == cid) {
+                    console.log("1");
+                    res.json({course: cart, status: "done", message: "item does not exist" })
+                    await cart.save()
+                } else if (item.courseId == cid) {
+                    console.log("2");
+                    cart.cartItems.splice(index, 1);
+                    res.json({ course: cart, status: "done", message: "remove " })
+                    await cart.save()
+                }
+            })
+           
+
+        } catch (err) {
+            res.send(err)
+        }
+    },
+    cartItems: async (req, res) => {
+        try {
+            let total = 0;
+            let c = 0;
+            const course = await Cart.findOne({ user: req.params.id }).populate('cartItems.courseId').populate('cartItems.universityId');
+            for (let item of course.cartItems){
+                
+                total = total + parseInt(item.courseId.C_price);
+                console.log(total);
+                c++
+                if(c == course.cartItems.length){
+                    break;
+                }
+            }
+            console.log(total);
+            res.json({details:course.cartItems,total});
+            
+        } catch (err) {
+            res.send(err)
+        }
+    },
+    getCourseInCart: async (req, res) => {
+        try {
             const cart = await Cart.find();
             res.send(cart);
-        }catch(err){
-        res.send(err)
+        } catch (err) {
+            res.send(err)
         }
     }
 }

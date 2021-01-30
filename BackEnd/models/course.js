@@ -35,16 +35,15 @@ const courseSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref: 'Category',
         required:true
-    }
-    // ,
+    },
     // Users:[{
     //     type:mongoose.Schema.Types.ObjectId,
     //     ref: 'User'
     // }],
-    // Universities:[{
-    //     type:mongoose.Schema.Types.ObjectId,
-    //     ref: 'University'
-    // }]
+    Universities:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'University'
+    }]
 })
 
 

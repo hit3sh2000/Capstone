@@ -5,7 +5,7 @@ require('dotenv').config();
 const upload = require('../middlewares/multer');
 const{singIn}=require('../controllers/universityAuth')
 
-
+// to add and get all university
 router.route('/')
 .get(universityController.getuniversity)//to get all user
 .post(upload.single('Us_img'),universityController.adduniversity)//to add user

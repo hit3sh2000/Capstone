@@ -3,13 +3,16 @@ var router = express.Router();
 const courseController = require('../controllers/courseController')
 require('dotenv').config();
 const upload = require('../middlewares/multer');
-const {requireSignin,universityMiddleware}=require('../middlewares/usermiddleware')
+const { requireSignin, universityMiddleware } = require('../middlewares/usermiddleware')
 
 
 router.route('/')
-.get(courseController.getCourse)//to get all user
-.post(requireSignin,universityMiddleware, upload.single('C_img'), courseController.addCourse)//to add user
+    .get(courseController.getCourse)//to get all user
+    .post(upload.single('C_img'), courseController.addCourse)//to add user
+// .post(requireSignin,universityMiddleware, upload.single('C_img'), courseController.addCourse)//to add user
 
+router.route('/:id')
+    .get(courseController.fetchUniversityCourse)
 
 
 module.exports = router;

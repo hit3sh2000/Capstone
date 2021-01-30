@@ -3,14 +3,16 @@ const express = require("express");
 const {
   addCourseInCart,
   getCourseInCart,
-  cartItems
+  cartItems,
+  removeCourseInCart
 } = require("../controllers/cartController");
 const router = express.Router();
 const{requireSignin}=require('../middlewares/usermiddleware')
 
-router.post("/",addCourseInCart);
+router.post("/add",addCourseInCart);
+router.post("/remove",removeCourseInCart);
 router.get("/", getCourseInCart);
-router.post("/cartItems", cartItems);
+router.get("/cartItems/:id", cartItems);
 
 
 module.exports = router;
