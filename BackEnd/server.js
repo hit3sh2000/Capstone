@@ -10,6 +10,9 @@ const cookieParser=require('cookie-parser')
 const config  = require('./Paytm/config')
 const checksum_lib  = require('./Paytm/checksum')
 
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+const Cart = mongoose.model('Cart');
 const user = require('./routes/userRoute');    // import  userController                        
 const course = require('./routes/courseRoute')
 const university = require('./routes/universityRoute');    // import  userController    
@@ -19,7 +22,6 @@ const schedule = require('./routes/scheduleRoutes')
 const cart = require('./routes/cartRoute')
 const educator = require('./routes/educatorRoute')
 const Pay = require('./routes/PayRoute')
-
 const app = express()                                    //Asigning express    
      
 app.use(cors());
@@ -42,17 +44,15 @@ app.get('hi',(req,res)=>{
 app.use('/user',user);        //  setting router 
 app.use('/course',course);
 app.use('/university',university);        //  setting router 
-app.use('/user/auth',userAuth); 
+// app.use('/user/auth',userAuth); 
 app.use('/category',category); 
 app.use('/schedule',schedule); 
 app.use('/cart',cart); 
 app.use('/educator',educator); 
 app.use('/Pay',Pay); 
 
-app.post("/callback", (req, res) => {
-  
-  res.redirect("http://localhost:3001/")
-  res.json("done")
+app.post("/callback", async (req, res) => {
+  res.redirect("http://localhost:3001/paymentstatus")
 });
 
 console.log(process.env.PORT);

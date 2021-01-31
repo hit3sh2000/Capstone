@@ -8,7 +8,7 @@ module.exports = {
         try {
             const id = req.body.id;
             const user = await User.findById(id);
-            let temp  = user.U_contact.toString()
+            let temp = user.U_contact.toString()
             var paymentDetails = {
                 amount: req.body.amount,
                 customerId: user.U_firstname,
@@ -18,38 +18,52 @@ module.exports = {
         } catch (error) {
             res.send(error)
         }
-            if (!paymentDetails.amount || !paymentDetails.customerId || !paymentDetails.customerEmail || !paymentDetails.customerPhone) {
-                res.status(400).send('Payment failed')
-            } else {
-                var params = {};
-                params['MID'] = config.PaytmConfig.mid;
-                params['WEBSITE'] = config.PaytmConfig.website;
-                params['CHANNEL_ID'] = 'WEB';
-                params['INDUSTRY_TYPE_ID'] = 'Retail';
-                params['ORDER_ID'] = 'TEST_' + new Date().getTime();
-                params['CUST_ID'] = paymentDetails.customerId;
-                params['TXN_AMOUNT'] = paymentDetails.amount;
-                params['CALLBACK_URL'] = 'http://localhost:3000/callback';
-                params['EMAIL'] = paymentDetails.customerEmail;
-                params['MOBILE_NO'] = paymentDetails.customerPhone;
+        if (!paymentDetails.amount || !paymentDetails.customerId || !paymentDetails.customerEmail || !paymentDetails.customerPhone) {
+            res.status(400).send('Payment failed')
+        } else {
+            var params = {};
+            params['MID'] = config.PaytmConfig.mid;
+            params['WEBSITE'] = config.PaytmConfig.website;
+            params['CHANNEL_ID'] = 'WEB';
+            params['INDUSTRY_TYPE_ID'] = 'Retail';
+            params['ORDER_ID'] = 'TEST_' + new Date().getTime();
+            params['CUST_ID'] = paymentDetails.customerId;
+            params['TXN_AMOUNT'] = paymentDetails.amount;
+            params['CALLBACK_URL'] = 'http://localhost:3000/callback';
+            params['EMAIL'] = paymentDetails.customerEmail;
+            params['MOBILE_NO'] = paymentDetails.customerPhone;
+            checksum_lib.genchecksum(params, config.PaytmConfig.key, function (err, checksum) {
+                var txn_url = "https://securegw-stage.paytm.in/theia/processTransaction"; // for staging
+                // var txn_url = "https://securegw.paytm.in/theia/processTransaction"; // for production
+                params.CHECKSUMHASH = checksum
+                res.json(params)
+            });
+        }
+
+    },
+    bill: async (req, res) => {
+        try {
+            const id = req.body.id;
+            const user = await User.findById(id);
+            const cart = await Cart.findOne({ user: id }).populate('cartItems.courseId').populate('cartItems.universityId');
+            cart.cartItems.map(item=>{
+                const courses = { 
+                    course: item.courseId._id,
+                    university: item.universityId._id
+                }
+                user.courses.push(courses)
+            })
+            res.json({user,cart:cart.cartItems})
+            cart.cartItems.splice(0,cart.cartItems.length)
+
+            await user.save();
+            await cart.save();
 
 
-                checksum_lib.genchecksum(params, config.PaytmConfig.key, function (err, checksum) {
-                    var txn_url = "https://securegw-stage.paytm.in/theia/processTransaction"; // for staging
-                    // var txn_url = "https://securegw.paytm.in/theia/processTransaction"; // for production
+        } catch (error) {
 
-                    var form_fields = "";
-                    for (var x in params) {
-                        form_fields += "<input type='hidden' name='" + x + "' value='" + params[x] + "' >";
-                    }
-                    form_fields += "<input type='hidden' name='CHECKSUMHASH' value='" + checksum + "' >";
+        }
 
-                    res.writeHead(200, { 'Content-Type': 'text/html' });
-                    res.write('<html><head><title>Merchant Checkout Page</title></head><body><center><h1>Please do not refresh this page...</h1></center><form method="post" action="' + txn_url + '" name="f1">' + form_fields + '</form><script type="text/javascript">document.f1.submit();</script></body></html>');
-                    res.end();
-                });
-            }
-       
     }
 
 }
