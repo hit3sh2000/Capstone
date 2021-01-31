@@ -15,6 +15,7 @@ router.route('/')
 .get(userController.getUser)//to get all user
 .post(upload.single('U_avatar'),userController.addUser)//to add user
 
+
 router.post('/id',async(req,res)=>{
     try {
         const id = req.body.id;
