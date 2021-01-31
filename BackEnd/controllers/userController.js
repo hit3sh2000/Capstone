@@ -64,12 +64,20 @@ module.exports = {
             res.send(err)
         }
     },
+    userAllDetails:async (req, res) => {
+        try {
+            const id = req.body.id;
+            const user = await User.findById(id).populate('courses.course').populate('courses.university');
+            res.json(user);
+        } catch (err) {
+            res.json(err)
+        }
+    },
     Login: async (req, res) => {
 
         try {
             var un = req.body.username
             var password = req.body.password
-
 
             const user = await User.findOne({
                 U_username: un

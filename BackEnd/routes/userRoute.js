@@ -30,6 +30,6 @@ router.post('/id',async(req,res)=>{
 //to login user
 router.post('/login', userController.Login )
 
-
+router.post('/userAllDetails',userController.userAllDetails)
 
 module.exports = router;
