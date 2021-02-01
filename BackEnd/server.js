@@ -55,6 +55,5 @@ app.post("/callback", async (req, res) => {
   res.redirect("http://localhost:3001/paymentstatus")
 });
 
-console.log(process.env.PORT);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT,console.log(`Port is running on http://localhost:${PORT}`));

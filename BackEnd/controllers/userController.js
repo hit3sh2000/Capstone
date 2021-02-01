@@ -44,7 +44,6 @@ module.exports = {
             await user.save();
 
             const user1 = await User.findOne({ U_username: U_username });
-            console.log(user1);
             const cart = new Cart();
             cart.user = user1._id
             await cart.save()
@@ -64,7 +63,7 @@ module.exports = {
             res.send(err)
         }
     },
-    userAllDetails:async (req, res) => {
+    userAllDetails: async (req, res) => {
         try {
             const id = req.body.id;
             const user = await User.findById(id).populate('courses.course').populate('courses.university');
@@ -89,13 +88,33 @@ module.exports = {
             if (checkpassword) {
                 const accessToken = await signAccessToken(user.id)
 
-                res.json({auth: true,token:accessToken,result: user})
+                res.json({ auth: true, token: accessToken, result: user })
 
             } else {
-                res.json({auth: false,message: "Not allowed"})
+                res.json({ auth: false, message: "Not allowed" })
             }
         } catch (err) {
-            res.json({auth: false,err,message: "Not allowed"})
+            res.json({ auth: false, err, message: "Not allowed" })
         }
-    }
+    },
+    Edit: async (req, res) => {
+        try {
+            const { id, U_firstname, U_lastname, U_qualification,
+            U_age, U_gender, U_contact, U_address } = req.body;
+
+            const user = await User.findById(id);
+            user.U_firstname = U_firstname
+            user.U_lastname = U_lastname
+            user.U_qualification = U_qualification
+            user.U_age = U_age
+            user.U_gender = U_gender
+            user.U_contact = U_contact
+            user.U_address = U_address
+            console.log(user);
+            user.save()
+            res.json(user)
+        } catch (err) {
+            res.send(err)
+        }
+    },
 }

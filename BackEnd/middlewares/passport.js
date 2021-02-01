@@ -11,7 +11,6 @@ passport.use(
         user = user.toJSON();
         const checkpassword = await bcrypt.compare(password, user.U_password);
         if (checkpassword) {
-          console.log("User Authenticated");
           done(null, user);
         } else {
           done(null, false);

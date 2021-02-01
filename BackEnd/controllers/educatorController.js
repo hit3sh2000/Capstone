@@ -5,7 +5,6 @@ module.exports = {
     addeducator:async(req, res) => {
         
         const uni_id=req.user.id;
-        console.log(uni_id);
         try{          
             const { E_name, E_experience, E_age, E_qualification}= req.body
 
@@ -15,7 +14,6 @@ module.exports = {
             educator.E_age = E_age
             educator.E_qualification = E_qualification
             educator.E_university=uni_id
-           console.log(educator.E_unversity);
             await educator.save((err, doc) => {
                 if (!err)
                     res.json(educator)

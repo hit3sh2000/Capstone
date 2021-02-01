@@ -15,12 +15,12 @@ router.route('/')
 .get(userController.getUser)//to get all user
 .post(upload.single('U_avatar'),userController.addUser)//to add user
 
+router.post('/edit',userController.Edit)
 
 router.post('/id',async(req,res)=>{
     try {
         const id = req.body.id;
         const user = await User.findById(id);
-        console.log(user);
         res.json(user);
     } catch (err) {
         res.send(err)

@@ -92,11 +92,9 @@ exports.getFull = async (req, res) => {
     const university = await University.findById(uid);
     for (let cate of university.courses) {
       if (cate.course == cid) {
-        console.log("yes");
         temp1 = cate.course;
         temp2 = cate.Educator;
       } else {
-        console.log("no")
       }
     }
     const course = await Course.findById(cid);

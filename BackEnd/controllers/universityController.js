@@ -65,7 +65,6 @@ module.exports = {
             university.courses.map(item => {
                 if (item.course == CourseId) {
                     temp = 1;
-                    console.log(temp);
                 } 
             })
             if (temp == 0) {

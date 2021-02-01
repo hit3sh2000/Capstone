@@ -22,15 +22,13 @@ module.exports = {
                 // cart_course.cartItems.courseId.map(item => {
                 //     total += parseInt(item.C_price)
                 // })
-                console.log(cart);
                 await cart.save();
-                console.log(cart);
                 res.json({ TotalAmount: total, cart: true, cart })
             } else {
                 cart_course.cartItems.map(item => {
                     total += parseInt(item.courseId.C_price)
                 })
-                // console.log(total);
+                // (total);
                 // console.log({ message: "courese is already added in cart" });
 
                 res.json({ TotalAmount: total, course: cart, cart: false, message: "courese is already added in cart" })
@@ -45,17 +43,12 @@ module.exports = {
             const cid = req.body.cid;
             const uid = req.body.uid;
             const cart = await Cart.findOne({ user: uid });
-            // console.log(cart);
-            console.log("here");
             cart.cartItems.map(async(item, index) => {
-                console.log(item.courseId,index);
 
                 if (!item.courseId == cid) {
-                    console.log("1");
                     res.json({course: cart, status: "done", message: "item does not exist" })
                     await cart.save()
                 } else if (item.courseId == cid) {
-                    console.log("2");
                     cart.cartItems.splice(index, 1);
                     res.json({ course: cart, status: "done", message: "remove " })
                     await cart.save()
@@ -75,13 +68,11 @@ module.exports = {
             for (let item of course.cartItems){
                 
                 total = total + parseInt(item.courseId.C_price);
-                console.log(total);
                 c++
                 if(c == course.cartItems.length){
                     break;
                 }
             }
-            console.log(total);
             res.json({details:course.cartItems,total});
             
         } catch (err) {
