@@ -17,6 +17,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "paypal-rest-sdk": "^1.8.1",
+    "react-file-reader": "^1.1.4",
     "shortid": "^2.2.16",
     "slugify": "^1.4.6",
     "stripe": "^8.132.0"

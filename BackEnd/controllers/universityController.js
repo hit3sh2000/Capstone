@@ -72,6 +72,7 @@ module.exports = {
             if (university == null) {
                 return res.status(400).send('cannot find university')
             }
+            console.log(university);
             const checkpassword = await bcrypt.compare(password, university.Us_password);
             console.log(checkpassword);
             if (checkpassword) {

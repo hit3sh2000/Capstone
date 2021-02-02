@@ -15,4 +15,7 @@ router.route('/:id')
     .get(courseController.fetchUniversityCourse)
 
 
+router.post('/university/:uid',courseController.byUniversity)
+
+
 module.exports = router;
