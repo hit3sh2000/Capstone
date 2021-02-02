@@ -16,5 +16,9 @@ router.route('/addcourse')
 .get(universityController.getuniversity_course)
 .post(universityController.adduniversity_course)
 
+router.post('/getid',universityController.Getid)
+
+router.post('/login',universityController.Login)
+router.post('/update',universityController.Update)
 
 module.exports = router;

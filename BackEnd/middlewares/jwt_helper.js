@@ -3,10 +3,10 @@ const JWT = require('jsonwebtoken')
 
 //for assigning a Access Token
 module.exports = {
-    signAccessToken: (userId) => {
+    signAccessToken: (id) => {
         return new Promise((resolve, reject) => {
 
-            const payload = { userId }
+            const payload = { id }
             const secret = "079d8c37cb8039d01b9ab2c9dc1f89f5eddc02ea15b80ece2a09620cce4d34bd"
 
 

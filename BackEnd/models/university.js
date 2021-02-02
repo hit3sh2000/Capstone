@@ -25,6 +25,13 @@ var universitySchema = new mongoose.Schema({
   Us_address:String,
   Us_role:String,
 
+  schedule:[
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course"
+    }
+  ],
+
   courses: [
     {
       course:{
