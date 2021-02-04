@@ -96,15 +96,19 @@ module.exports = {
     },
     Update: async (req, res) => {
         try {
+            const fileStr = req.body.avatar;
+            const uploadResponse = await cloudinary.v2.uploader.upload(fileStr, {
+                upload_preset: 'ml_default',
+            });
 
             const { id,Us_name,  Us_desc, Us_ratings, Us_address } = req.body;
             console.log(id,Us_name, Us_desc, Us_ratings, Us_address);
             const university = await University.findById(id);
             university.Us_name = Us_name
             university.Us_desc = Us_desc
+            university.Us_img = uploadResponse.secure_url
             university.Us_ratings = Us_ratings
             university.Us_address = Us_address
-            console.log(university);
             university.save()
 
             res.json(university)

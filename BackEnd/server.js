@@ -26,11 +26,14 @@ const app = express()                                    //Asigning express
      
 app.use(cors());
 
-app.use(bodyparser.urlencoded({
-    extended: true                          //Asigning bodyparser
-}));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-app.use(bodyparser.json());                   //Asigning json of bodyparser
+// app.use(bodyparser.urlencoded({
+//     extended: true                          //Asigning bodyparser
+// }));
+
+// app.use(bodyparser.json());                   //Asigning json of bodyparser
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
@@ -41,9 +44,11 @@ app.get('hi',(req,res)=>{
   res.send("hii")
 })
 
-app.use('/user',user);        //  setting router 
+
+//  setting router 
+app.use('/user',user);        
 app.use('/course',course);
-app.use('/university',university);        //  setting router 
+app.use('/university',university);        
 // app.use('/user/auth',userAuth); 
 app.use('/category',category); 
 app.use('/schedule',schedule); 
@@ -51,6 +56,8 @@ app.use('/cart',cart);
 app.use('/educator',educator); 
 app.use('/Pay',Pay); 
 
+
+//after payment
 app.post("/callback", async (req, res) => {
   res.redirect("http://localhost:3001/paymentstatus")
 });

@@ -18,7 +18,6 @@ module.exports = {
                 C_name, C_desc, C_ratings, C_reviews, C_duration, C_price, category
             } = req.body;
 
-
             const course = new Course();
             course.C_name = C_name
             course.C_slug = slugify(C_name)
@@ -64,6 +63,11 @@ module.exports = {
         try {
             const uid = req.params.uid;
 
+            const fileStr = req.body.course_avatar;
+            const uploadResponse = await cloudinary.v2.uploader.upload(fileStr, {
+                upload_preset: 'ml_default',
+            });
+
             const {
                 C_name, C_desc, C_ratings, C_reviews, C_duration, C_price, category,educatorinfo
             } = req.body;
@@ -73,6 +77,7 @@ module.exports = {
                 course.C_name = C_name
                 course.C_slug = slugify(C_name)
                 course.C_desc = C_desc
+                course.C_img = uploadResponse.secure_url
                 course.C_duration = C_duration
                 course.C_price = C_price
                 course.category = category
