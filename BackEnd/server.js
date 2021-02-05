@@ -19,6 +19,7 @@ const university = require('./routes/universityRoute');    // import  userContro
 const category = require('./routes/categoryRoute')
 const userAuth = require('./routes/userAuthRoute')
 const schedule = require('./routes/scheduleRoutes')
+const topcourse = require('./routes/topcourse')
 const cart = require('./routes/cartRoute')
 const educator = require('./routes/educatorRoute')
 const Pay = require('./routes/PayRoute')
@@ -49,12 +50,12 @@ app.get('hi',(req,res)=>{
 app.use('/user',user);        
 app.use('/course',course);
 app.use('/university',university);        
-// app.use('/user/auth',userAuth); 
 app.use('/category',category); 
 app.use('/schedule',schedule); 
 app.use('/cart',cart); 
 app.use('/educator',educator); 
 app.use('/Pay',Pay); 
+app.use('/topcourse',topcourse); 
 
 
 //after payment

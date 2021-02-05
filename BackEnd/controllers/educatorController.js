@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 const Educator = mongoose.model('Educator');
 module.exports = {
-    // 
     addeducator:async(req, res) => {
         
-        const uni_id=req.user.id;
         try{          
             const { E_name, E_experience, E_age, E_qualification}= req.body
 
@@ -13,7 +11,6 @@ module.exports = {
             educator.E_experience = E_experience
             educator.E_age = E_age
             educator.E_qualification = E_qualification
-            educator.E_university=uni_id
             await educator.save((err, doc) => {
                 if (!err)
                     res.json(educator)

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const topcoursesSchema = new mongoose.Schema(
   {
-    Topcourses: [
+    courses: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
